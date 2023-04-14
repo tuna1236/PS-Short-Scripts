@@ -1,0 +1,12 @@
+$ComputerName = "Sal-10313"
+
+$Session = New-PSSession -ComputerName $ComputerName
+Invoke-Command -Session $Session -ScriptBlock {
+   $Networkname = Get-ChildItem "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles" 
+	$Network1 = $Networkname.name
+	$Network = $Network1.Trim("C:\Windows\system32\")
+
+	ForEach ($List in $Network) {Set-ItemProperty -Path "Registry::$($List)" -Name "Category" -Value 1}# | Out-Null}
+	ForEach ($List1 in $Network) {Set-ItemProperty -Path "Registry::$($List1)" -Name "CategoryType" -Value 0}# | Out-Null}
+}
+
